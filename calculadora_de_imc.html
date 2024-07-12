@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de IMC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[type="number"] {
+      width: 80px;
+      padding: 5px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    p {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+
+
+    .normal {
+      color: green;
+    }
+
+    .alerta {
+      color: orange;
+    }
+
+    .perigo {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Calculadora de IMC</h2>
+    <label for="peso">Peso (kg):</label>
+    <input type="number" id="peso" name="peso" required step="0.1">
+    <br><br>
+    <label for="altura">Altura (m):</label>
+    <input type="number" id="altura" name="altura" required step="0.01">
+    <br><br>
+    <button onclick="calcularIMC()">Calcular IMC</button>
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    function calcularIMC() {
+      
+      var peso = parseFloat(document.getElementById('peso').value);
+      var altura = parseFloat(document.getElementById('altura').value);
+
+      
+      if (isNaN(peso) || isNaN(altura) || peso <= 0 || altura <= 0) {
+        alert("Por favor, digite valores válidos para peso e altura.");
+        return;
+      }
+
+      var imc = peso / (altura * altura);
+
+      
+      var resultado = document.getElementById('resultado');
+      resultado.innerHTML = "Seu IMC é: " + imc.toFixed(2);
+
+      var situacao = "";
+      if (imc < 18.5) {
+        situacao = "Abaixo do peso";
+        resultado.className = "perigo";
+      } else if (imc >= 18.5 && imc < 24.9) {
+        situacao = "Peso normal";
+        resultado.className = "normal";
+      } else if (imc >= 24.9 && imc < 29.9) {
+        situacao = "Sobrepeso";
+        resultado.className = "alerta";
+      } else if (imc >= 29.9 && imc < 34.9) {
+        situacao = "Obesidade Grau I";
+        resultado.className = "perigo";
+      } else if (imc >= 34.9 && imc < 39.9) {
+        situacao = "Obesidade Grau II";
+        resultado.className = "perigo";
+      } else {
+        situacao = "Obesidade Grau III (mórbida)";
+        resultado.className = "perigo";
+      }
+
+     
+      resultado.innerHTML += "<br>Situação: " + situacao;
+    }
+  </script>
+</body>
+</html>
